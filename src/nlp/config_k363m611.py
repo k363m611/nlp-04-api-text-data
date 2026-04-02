@@ -1,5 +1,5 @@
 """
-config_case.py
+config_k363m611.py
 (EDIT YOUR COPY OF THIS FILE)
 
 Purpose
