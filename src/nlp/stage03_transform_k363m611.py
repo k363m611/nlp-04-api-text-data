@@ -1,46 +1,17 @@
 """
-stage03_transform_case.py
-(EDIT YOUR COPY OF THIS FILE)
+stage03_transform_k363m611.py
 
 Source: validated JSON object
 Sink: Polars DataFrame
 
 Purpose
-
-  Transform validated JSON data into a structured format.
-
-Analytical Questions
-
-- Which fields are needed from the JSON data?
-- How can records be normalized into tabular form?
-- What derived fields would support analysis?
-
-Notes
-
-Following our process, do NOT edit this _case file directly,
-keep it as a working example.
-
-In your custom project, copy this _case.py file and
-append with _yourname.py instead.
-
-Then edit your copied Python file to:
-- extract the fields needed for your analysis,
-- normalize records into a consistent structure,
-- create any derived fields required.
+    Transform validated JSON data into a structured format.
 """
-
-# ============================================================
-# Section 1. Setup and Imports
-# ============================================================
 
 import logging
 from typing import Any
 
 import polars as pl
-
-# ============================================================
-# Section 2. Define Run Transform Function
-# ============================================================
 
 
 def run_transform(
@@ -79,6 +50,8 @@ def run_transform(
         [
             pl.col("title").str.len_chars().alias("title_length"),
             pl.col("body").str.len_chars().alias("body_length"),
+            pl.col("title").str.split(" ").list.len().alias("title_word_count"),
+            pl.col("body").str.split(" ").list.len().alias("body_word_count"),
         ]
     )
 
@@ -86,5 +59,4 @@ def run_transform(
     LOG.info(f"DataFrame preview:\n{df.head()}")
     LOG.info("Sink: Polars DataFrame created")
 
-    # Return the transformed DataFrame for use in the next stage.
     return df
